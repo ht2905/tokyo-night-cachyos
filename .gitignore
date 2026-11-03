@@ -1,0 +1,18 @@
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Editor & IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Local scratch and logs
+temp/
+logs/
+artifacts/
+
+# Test backup directories
+.tokyo_night_backup_*/
