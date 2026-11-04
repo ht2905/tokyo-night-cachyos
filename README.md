@@ -23,8 +23,8 @@ flowchart TD
     D --> D3["Fastfetch: deploy Tokyo Night cyber spec card"]
 
     A --> E["4. Shell & Prompt Stack"]
-    E --> E1["Deploy tokyo-night.p10k.zsh with indigo/cyan/mint pills"]
-    E --> E2["Inject FZF Tokyo Night palette and autosuggestions into Zsh"]
+    E --> E1["Deploy tokyo-night.p10k.zsh (quiet instant prompt mode)"]
+    E --> E2["Deploy tokyo-night-env.zsh: FZF, autosuggestions, dynamic greeting & quote box"]
 
     C & D & E --> F["Tokyo Night Workstation Ready"]
 
@@ -43,7 +43,11 @@ flowchart TD
     - Micro editor syntax coloring using `tokyonight.micro`.
     - Bat pager Sublime/TextMate theme (`tokyonight_night.tmTheme`) with automatic cache compilation via `bat cache --build`.
 - **Fastfetch Hardware Card**: Cyber-minimalist system spec layout customized with CachyOS branding and indigo/cyan highlights.
-- **Powerlevel10k Prompt**: Configured with segmented pill shapes, blurred pill transitions, execution timers, git status colors (clean mint, modified amber), and one-line transient prompt mode.
+- **Dynamic Terminal Greeting & Wisdom Box**:
+    - Automatic system spec overview via Fastfetch on interactive launch.
+    - Time-of-day greeting (morning, afternoon, evening, quiet hours) with ASCII cat companion and user attribution.
+    - Curated 20-quote authenticated wisdom and science quotes array spanning bioinformatics, computing, and mathematics with dynamically calculated border alignment.
+- **Powerlevel10k Prompt**: Configured with segmented pill shapes, blurred pill transitions, execution timers, git status colors (clean mint, modified amber), one-line transient prompt mode, and quiet instant prompt mode (`POWERLEVEL9K_INSTANT_PROMPT=quiet`) eliminating console output alerts while preserving sub-millisecond launch speed.
 - **Safe Rollback Utilities**: Automated pre-execution snapshot to `~/.tokyo_night_backup_*` with complete one-command restore capabilities.
 
 ---
@@ -108,13 +112,12 @@ Run the cleanup utility when you have verified your workstation:
 | [`cleanup.sh`](cleanup.sh) | Current Folder | Safety rollback and backup directory management utility |
 | [`TokyoNight.colorscheme`](TokyoNight.colorscheme) | `~/.local/share/konsole/` | Native KDE Konsole color scheme for Tokyo Night (`#1a1b26`) |
 | [`TokyoNightStorm.colorscheme`](TokyoNightStorm.colorscheme) | `~/.local/share/konsole/` | Alternate storm variant with lighter slate background (`#24283b`) |
-| [`tokyo-night.p10k.zsh`](tokyo-night.p10k.zsh) | `~/.p10k.zsh` | Powerlevel10k theme configuration with indigo, cyan, and mint pills |
+| [`tokyo-night.p10k.zsh`](tokyo-night.p10k.zsh) | `~/.p10k.zsh` | Powerlevel10k theme configuration with quiet instant prompt and styled pills |
 | [`tokyonight.micro`](tokyonight.micro) | `~/.config/micro/colorschemes/` | Syntax highlighting definition for Micro editor |
 | [`tokyonight_night.tmTheme`](tokyonight_night.tmTheme) | `$(bat --config-dir)/themes/` | Sublime/TextMate syntax theme for `bat` pager |
 | [`fastfetch.jsonc`](fastfetch.jsonc) | `~/.config/fastfetch/config.jsonc` | Minimalist system specification card with Tokyo Night palette |
-| [`tokyo-night-env.zsh`](tokyo-night-env.zsh) | `~/.config/zsh/` | Environment hooks for FZF colors and Zsh autosuggestions (`fg=60`) |
+| [`tokyo-night-env.zsh`](tokyo-night-env.zsh) | `~/.config/zsh/` | Environment hooks: FZF palette, autosuggestions, dynamic greeting & quote box |
 | [`assets/`](assets/) | Media Assets | Workstation demonstration screenshots and visual previews |
-| [`opening-message/`](opening-message/) | Documentation | Instant prompt fix guide and greeting sequence architectural notes |
 
 ---
 

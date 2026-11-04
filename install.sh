@@ -195,17 +195,41 @@ log_success "Fastfetch config installed into ~/.config/fastfetch/config.jsonc"
 # ==============================================================================
 log_step "Step 6/6: Deploying Tokyo Night Powerlevel10k & Zsh integration..."
 
-# 1. Deploy tokyo-night.p10k.zsh
+# 1. Deploy tokyo-night.p10k.zsh (quiet instant prompt mode)
 cp "$SCRIPT_DIR/tokyo-night.p10k.zsh" "$HOME/.p10k.zsh"
-log_sub "Deployed Tokyo Night theme to ~/.p10k.zsh"
+log_sub "Deployed Tokyo Night theme (quiet instant prompt) to ~/.p10k.zsh"
 
-# 2. Deploy environment integration (FZF, Autosuggestions, Syntax Highlighting)
+# 2. Deploy environment integration (FZF, Autosuggestions, Syntax Highlighting, Greeting)
 ZSH_CONF_DIR="$HOME/.config/zsh"
 mkdir -p "$ZSH_CONF_DIR"
 cp "$SCRIPT_DIR/tokyo-night-env.zsh" "$ZSH_CONF_DIR/"
+log_sub "Installed tokyo-night-env.zsh (FZF + greeting + quote box) in $ZSH_CONF_DIR"
 
 # Wire into ~/.zshrc if not already sourced
 if [[ -f "$HOME/.zshrc" ]]; then
+  # Migrate any legacy inline greeting block from ~/.zshrc to modular tokyo-night-env.zsh
+  if grep -qE "TOKYO NIGHT OPENING GREETING SEQUENCE|TOKYO NIGHT STATION" "$HOME/.zshrc"; then
+    python3 - << 'PYEOF'
+import os
+zshrc_path = os.path.expanduser("~/.zshrc")
+if os.path.exists(zshrc_path):
+    with open(zshrc_path, "r") as f:
+        lines = f.readlines()
+    env_idx = -1
+    for i, line in enumerate(lines):
+        if "tokyo-night-env.zsh" in line:
+            env_idx = i
+            break
+    if env_idx != -1 and env_idx < len(lines) - 1:
+        following = "".join(lines[env_idx+1:])
+        if any(k in following for k in ["Dynamic Time-of-Day", "TOKYO NIGHT OPENING", "TOKYO NIGHT STATION"]):
+            with open(zshrc_path, "w") as f:
+                f.writelines(lines[:env_idx+1])
+                f.write("\n")
+PYEOF
+    log_sub "Cleaned legacy inline greeting block from ~/.zshrc (now in tokyo-night-env.zsh)"
+  fi
+
   if ! grep -q "tokyo-night-env.zsh" "$HOME/.zshrc"; then
     cat << 'EOF' >> "$HOME/.zshrc"
 
@@ -216,7 +240,7 @@ EOF
   fi
 fi
 
-log_success "Zsh environment & Powerlevel10k configured!"
+log_success "Zsh environment, greeting sequence & Powerlevel10k configured!"
 
 echo ""
 echo -e "${C_INDIGO}═════════════════════════════════════════════════════════════════${C_RESET}"
@@ -225,8 +249,9 @@ echo -e "${C_PURPLE}  1. A full safety backup was saved to:${C_RESET} ${C_MUTED}
 echo -e "${C_PURPLE}  2. Konsole theme 'Tokyo Night' installed (~/.local/share/konsole)${C_RESET}"
 echo -e "${C_PURPLE}  3. Micro editor colorscheme set to 'tokyonight'${C_RESET}"
 echo -e "${C_PURPLE}  4. Bat cache built with 'tokyonight_night' theme${C_RESET}"
-echo -e "${C_PURPLE}  5. Powerlevel10k configured with Tokyo Night palette${C_RESET}"
+echo -e "${C_PURPLE}  5. Powerlevel10k configured with Tokyo Night palette (quiet instant prompt)${C_RESET}"
 echo -e "${C_PURPLE}  6. Fastfetch tuned with Tokyo Night cyber colors${C_RESET}"
+echo -e "${C_PURPLE}  7. Opening greeting: time-of-day duo cat & randomized quote box active${C_RESET}"
 echo -e "${C_INDIGO}═════════════════════════════════════════════════════════════════${C_RESET}"
 echo ""
 echo -e "${C_BOLD}Next Step for Konsole:${C_RESET}"
