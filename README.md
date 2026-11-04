@@ -2,6 +2,8 @@
 
 A tailored, turn-key terminal customization suite engineered to transform a CachyOS workstation into a unified, cyber-indigo development environment. Fully integrates KDE Konsole, Powerlevel10k, Micro, Bat, Fastfetch, and FZF.
 
+![Tokyo Night Terminal Preview](assets/tokyo-night_terminal-preview.png)
+
 ---
 
 ## Architecture and Workflow
@@ -111,6 +113,7 @@ Run the cleanup utility when you have verified your workstation:
 | [`tokyonight_night.tmTheme`](tokyonight_night.tmTheme) | `$(bat --config-dir)/themes/` | Sublime/TextMate syntax theme for `bat` pager |
 | [`fastfetch.jsonc`](fastfetch.jsonc) | `~/.config/fastfetch/config.jsonc` | Minimalist system specification card with Tokyo Night palette |
 | [`tokyo-night-env.zsh`](tokyo-night-env.zsh) | `~/.config/zsh/` | Environment hooks for FZF colors and Zsh autosuggestions (`fg=60`) |
+| [`assets/`](assets/) | Media Assets | Workstation demonstration screenshots and visual previews |
 | [`opening-message/`](opening-message/) | Documentation | Instant prompt fix guide and greeting sequence architectural notes |
 
 ---
