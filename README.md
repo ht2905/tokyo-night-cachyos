@@ -104,20 +104,16 @@ Run the cleanup utility when you have verified your workstation:
 
 ---
 
-## Repository Components
+## Deployment & Subsystem Architecture
 
-| File | Target Location | Description |
+| Subsystem Layer | Target Location | Operational Role |
 | :--- | :--- | :--- |
-| [`install.sh`](install.sh) | Current Folder | Automated deployment script for Konsole, Bat, Micro, Fastfetch, and Zsh |
-| [`cleanup.sh`](cleanup.sh) | Current Folder | Safety rollback and backup directory management utility |
-| [`TokyoNight.colorscheme`](TokyoNight.colorscheme) | `~/.local/share/konsole/` | Native KDE Konsole color scheme for Tokyo Night (`#1a1b26`) |
-| [`TokyoNightStorm.colorscheme`](TokyoNightStorm.colorscheme) | `~/.local/share/konsole/` | Alternate storm variant with lighter slate background (`#24283b`) |
-| [`tokyo-night.p10k.zsh`](tokyo-night.p10k.zsh) | `~/.p10k.zsh` | Powerlevel10k theme configuration with quiet instant prompt and styled pills |
-| [`tokyonight.micro`](tokyonight.micro) | `~/.config/micro/colorschemes/` | Syntax highlighting definition for Micro editor |
-| [`tokyonight_night.tmTheme`](tokyonight_night.tmTheme) | `$(bat --config-dir)/themes/` | Sublime/TextMate syntax theme for `bat` pager |
-| [`fastfetch.jsonc`](fastfetch.jsonc) | `~/.config/fastfetch/config.jsonc` | Minimalist system specification card with Tokyo Night palette |
-| [`tokyo-night-env.zsh`](tokyo-night-env.zsh) | `~/.config/zsh/` | Environment hooks: FZF palette, autosuggestions, dynamic greeting & quote box |
-| [`assets/`](assets/) | Media Assets | Workstation demonstration screenshots and visual previews |
+| **Automation & Rollback** | `install.sh`, `cleanup.sh` | Deployment orchestration, pre-install snapshots, and non-destructive rollbacks |
+| **KDE Konsole Themes** | `~/.local/share/konsole/` | Native color schemes for Tokyo Night (`#1a1b26`) and Tokyo Night Storm (`#24283b`) |
+| **Prompt Engine** | `~/.p10k.zsh` | Segmented pill Powerlevel10k prompt with quiet instant prompt mode |
+| **Terminal Utilities** | `~/.config/micro/`, `$(bat --config-dir)/` | Syntax color themes for Micro editor and Bat pager |
+| **Shell Environment** | `~/.config/zsh/tokyo-night-env.zsh` | FZF palette integration, autosuggestions, dynamic greeting, and wisdom quotes |
+| **Hardware Spec Card** | `~/.config/fastfetch/config.jsonc` | Minimalist system specification card formatted for CachyOS |
 
 ---
 
