@@ -10,6 +10,7 @@ Thumbs.db
 *~
 
 # Local scratch and logs
+.scratch/
 temp/
 logs/
 artifacts/

@@ -1,90 +1,73 @@
-# Tokyo Night Customization Suite for CachyOS and KDE Konsole
+# Tokyo Night Customization Suite for CachyOS & KDE Konsole
 
-A tailored, turn-key terminal customization suite engineered to transform a CachyOS workstation into a unified, cyber-indigo development environment. Fully integrates KDE Konsole, Powerlevel10k, Micro, Bat, Fastfetch, and FZF.
+A safe, turnkey terminal customization suite that applies a unified 24-bit truecolor Tokyo Night theme across KDE Konsole, Powerlevel10k, Zsh, Micro, Bat, Fastfetch, and FZF on CachyOS.
 
 ![Tokyo Night Terminal Preview](assets/tokyo-night_terminal-preview.png)
 
 ---
 
-## Architecture and Workflow
+## Architecture & Workflow
 
 ```mermaid
 flowchart TD
-    A["Clone and run ./install.sh"] --> B["1. Safety Backup"]
-    B --> B1["Backup ~/.p10k.zsh, ~/.zshrc, micro, bat, fastfetch to ~/.tokyo_night_backup_*"]
+    A["Clone & run ./install.sh"] --> B["1. Original-State Manifest"]
+    B --> B1["Snapshot original files, symlinks & konsolerc to ~/.local/state/tokyo-night-cachyos/"]
 
-    A --> C["2. KDE Konsole Theme Provisioning"]
-    C --> C1["Deploy TokyoNight and TokyoNightStorm to ~/.local/share/konsole/"]
-    C --> C2["Register Tokyo Night Konsole profile"]
+    A --> C["2. KDE Konsole Provisioning"]
+    C --> C1["Install TokyoNight & TokyoNightStorm colorschemes + profiles"]
+    C --> C2["Auto-detect Nerd Font & set default profile via kwriteconfig6"]
 
-    A --> D["3. Developer Toolchain Integration"]
-    D --> D1["Micro: deploy tokyonight.micro and configure settings.json"]
-    D --> D2["Bat: install tokyonight_night.tmTheme and rebuild cache"]
-    D --> D3["Fastfetch: deploy Tokyo Night cyber spec card"]
+    A --> D["3. CLI Toolchain Integration"]
+    D --> D1["Micro: install tokyonight.micro & update settings.json"]
+    D --> D2["Bat: install tokyonight_night.tmTheme, update config & rebuild cache"]
+    D --> D3["Fastfetch: deploy Tokyo Night CachyOS spec card"]
 
-    A --> E["4. Shell & Prompt Stack"]
-    E --> E1["Deploy tokyo-night.p10k.zsh (quiet instant prompt mode)"]
-    E --> E2["Deploy tokyo-night-env.zsh: FZF, autosuggestions, dynamic greeting & quote box"]
+    A --> E["4. Zsh & Powerlevel10k Stack"]
+    E --> E1["Deploy 24-bit truecolor tokyo-night.p10k.zsh"]
+    E --> E2["Deploy tokyo-night-env.zsh via managed ~/.zshrc block"]
 
-    C & D & E --> F["Tokyo Night Workstation Ready"]
-
-    F --> G["Post-Setup: Run ./cleanup.sh (Finalize or Rollback)"]
+    C & D & E --> F["Tokyo Night Terminal Ready"]
+    F --> G["Post-Setup: ./cleanup.sh (--finalize or --rollback)"]
 ```
 
 ---
 
 ## Features
 
-- **Unified Tokyo Night Design**: Synchronizes color schemes across terminal emulators, code editors, CLI pagers, and system fetch cards.
-- **KDE Konsole Dual Profiles**:
-    - **Tokyo Night**: Classic midnight indigo (`#1a1b26`) for optimal dark-mode contrast.
-    - **Tokyo Night Storm**: Slate storm background (`#24283b`) for medium-contrast preferences.
-- **Editor and Pager Theming**:
-    - Micro editor syntax coloring using `tokyonight.micro`.
-    - Bat pager Sublime/TextMate theme (`tokyonight_night.tmTheme`) with automatic cache compilation via `bat cache --build`.
-- **Fastfetch Hardware Card**: Cyber-minimalist system spec layout customized with CachyOS branding and indigo/cyan highlights.
-- **Dynamic Terminal Greeting & Wisdom Box**:
-    - Automatic system spec overview via Fastfetch on interactive launch.
-    - Time-of-day greeting (morning, afternoon, evening, quiet hours) with ASCII cat companion and user attribution.
-    - Curated 20-quote authenticated wisdom and science quotes array spanning bioinformatics, computing, and mathematics with dynamically calculated border alignment.
-- **Powerlevel10k Prompt**: Configured with segmented pill shapes, blurred pill transitions, execution timers, git status colors (clean mint, modified amber), one-line transient prompt mode, and quiet instant prompt mode (`POWERLEVEL9K_INSTANT_PROMPT=quiet`) eliminating console output alerts while preserving sub-millisecond launch speed.
-- **Safe Rollback Utilities**: Automated pre-execution snapshot to `~/.tokyo_night_backup_*` with complete one-command restore capabilities.
+- **Unified 24-Bit Truecolor Palette**: Consistent `#RRGGBB` Tokyo Night colors across Konsole, Powerlevel10k, Zsh syntax highlighting, Zsh autosuggestions, FZF, Micro, Bat, and Fastfetch.
+- **Turnkey KDE Konsole Setup**: Installs both **Tokyo Night** (`#1a1b26`) and **Tokyo Night Storm** (`#24283b`) color schemes and profiles, auto-detects an installed Nerd Font, and activates `Tokyo Night` as the default profile via `kwriteconfig6`.
+- **Safe, Non-Destructive Deployment**:
+  - Preserves your **original** pre-install snapshot across repeated `install.sh` runs in `~/.local/state/tokyo-night-cachyos/`.
+  - Unlinks existing symlinks after recording their targets so external dotfiles repositories are never mutated.
+  - Uses strict `# >>> tokyo-night-cachyos >>>` / `# <<< tokyo-night-cachyos <<<` markers in `~/.zshrc`.
+  - Gracefully skips any missing tool without running `sudo pacman`, printing a ready-to-run `pacman` command at the end.
+- **Responsive Opening Greeting**: Fastfetch hardware overview, time-of-day ASCII cat greeting, and `$COLUMNS`-aware word-wrapped quote box wrapped in a local Zsh scope (zero global variable pollution).
+  - Set `TOKYO_NIGHT_GREETING=0` in `~/.zshrc` to disable startup output.
+  - Set `TOKYO_NIGHT_STATION_LABEL="Your Label"` to customize the quote box header.
 
 ---
 
 ## Quick Start
 
-### 1. Installation
-Clone the repository and run the setup script:
+### 1. Install
 
 ```bash
 git clone https://github.com/<username>/tokyo-night-cachyos.git
 cd tokyo-night-cachyos
 chmod +x install.sh cleanup.sh
 ./install.sh
+exec zsh
 ```
 
-### 2. Apply in Konsole
-1. Open **Konsole**.
-2. Navigate to **Settings** > **Manage Profiles...**
-3. Select **Tokyo Night** from the profiles list.
-4. Click **Set as Default** and press **OK**.
-5. Reload shell:
-    ```bash
-    exec zsh
-    ```
-
-### 3. Post-Setup Management
-Run the cleanup utility when you have verified your workstation:
+### 2. Finalize or Rollback
 
 ```bash
 # Interactive menu:
 ./cleanup.sh
 
 # Non-interactive CLI options:
-./cleanup.sh --finalize    # Retain Tokyo Night configuration and remove backup folder
-./cleanup.sh --rollback    # Restore original shell, editor, and Konsole settings
-./cleanup.sh --delete-only # Delete backup folder while retaining Tokyo Night settings
+./cleanup.sh --finalize  # Keep Tokyo Night active and remove backup snapshots
+./cleanup.sh --rollback  # Restore exact pre-install files, symlinks & Konsole default
 ```
 
 ---
@@ -95,30 +78,34 @@ Run the cleanup utility when you have verified your workstation:
 | :--- | :--- | :--- | :--- |
 | **Background (Night)** | Deep Midnight | `#1a1b26` | Dark navy / indigo |
 | **Background (Storm)** | Dark Slate | `#24283b` | Medium midnight slate |
-| **Foreground** | Soft Ice White | `#c0caf5` | High-readability white |
+| **Surface** | Elevated Indigo | `#3b4261` | Subtle UI surface |
+| **Muted / Comments** | Comment Slate | `#565f89` | Comments & autosuggestions |
+| **Foreground** | Soft Ice White | `#c0caf5` | High-readability foreground |
 | **Accent / Directory** | Neon Indigo | `#7aa2f7` | Crisp terminal blue |
-| **VCS Clean** | Mint Green | `#9ece6a` | Git clean status |
-| **VCS Modified** | Warm Amber | `#e0af68` | Git modified / untracked |
-| **Prompt Symbol** | Cyan Spark | `#7dcfff` | Execution indicator |
-| **Highlight / Special** | Vivid Lavender | `#bb9af7` | FZF pointer and Micro keywords |
+| **VCS Clean** | Mint Green | `#9ece6a` | Git clean status & strings |
+| **VCS Modified** | Warm Amber | `#e0af68` | Git modified & flags |
+| **Prompt / Command** | Cyan Spark | `#7dcfff` | Commands & prompt symbol |
+| **Highlight / Special** | Vivid Lavender | `#bb9af7` | FZF highlight & keywords |
+| **Error / Conflict** | Coral Red | `#f7768e` | Errors & merge conflicts |
 
 ---
 
-## Deployment & Subsystem Architecture
+## Repository & Deployment Layout
 
-| Subsystem Layer | Target Location | Operational Role |
+| Subsystem | Source Path | Target Location |
 | :--- | :--- | :--- |
-| **Automation & Rollback** | `install.sh`, `cleanup.sh` | Deployment orchestration, pre-install snapshots, and non-destructive rollbacks |
-| **KDE Konsole Themes** | `~/.local/share/konsole/` | Native color schemes for Tokyo Night (`#1a1b26`) and Tokyo Night Storm (`#24283b`) |
-| **Prompt Engine** | `~/.p10k.zsh` | Segmented pill Powerlevel10k prompt with quiet instant prompt mode |
-| **Terminal Utilities** | `~/.config/micro/`, `$(bat --config-dir)/` | Syntax color themes for Micro editor and Bat pager |
-| **Shell Environment** | `~/.config/zsh/tokyo-night-env.zsh` | FZF palette integration, autosuggestions, dynamic greeting, and wisdom quotes |
-| **Hardware Spec Card** | `~/.config/fastfetch/config.jsonc` | Minimalist system specification card formatted for CachyOS |
+| **Installer & Rollback** | `install.sh`, `cleanup.sh` | Manifest state in `~/.local/state/tokyo-night-cachyos/` |
+| **KDE Konsole** | `themes/konsole/` | `~/.local/share/konsole/` + `konsolerc` |
+| **Powerlevel10k** | `themes/zsh/tokyo-night.p10k.zsh` | `~/.p10k.zsh` |
+| **Zsh Environment** | `themes/zsh/tokyo-night-env.zsh` | `~/.config/zsh/tokyo-night-env.zsh` (sourced from `~/.zshrc`) |
+| **Micro Editor** | `themes/micro/tokyonight.micro` | `~/.config/micro/colorschemes/` + `settings.json` |
+| **Bat Pager** | `themes/bat/tokyonight_night.tmTheme` | `$(bat --config-dir)/themes/` + `config` |
+| **Fastfetch** | `themes/fastfetch/config.jsonc` | `~/.config/fastfetch/config.jsonc` |
 
 ---
 
 ## System Requirements
 
-- **Distribution**: CachyOS, Arch Linux, or any Linux distribution running KDE Plasma (version 5 or 6).
-- **Core Packages**: `zsh`, `konsole`, `micro`, `bat`, `fastfetch`, `fzf`.
-- **Font**: Nerd Font (such as MesloLGS NF, JetBrainsMono NF, or Hack NF) configured in Konsole profile settings.
+- **Distribution**: CachyOS, Arch Linux, or any Linux distribution running KDE Plasma 6.
+- **Core Packages**: `zsh`, `konsole`, `micro`, `bat`, `fastfetch`, `fzf`, `zsh-theme-powerlevel10k`.
+- **Font**: Any Nerd Font (e.g., `ttf-meslo-nerd`, `ttf-jetbrains-mono-nerd`, `ttf-firacode-nerd`).
