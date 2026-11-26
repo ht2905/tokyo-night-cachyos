@@ -52,7 +52,7 @@ flowchart TD
 ### 1. Install
 
 ```bash
-git clone https://github.com/<username>/tokyo-night-cachyos.git
+git clone https://github.com/ht2905/tokyo-night-cachyos.git
 cd tokyo-night-cachyos
 chmod +x install.sh cleanup.sh
 ./install.sh
